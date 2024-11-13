@@ -1,17 +1,31 @@
 package com.example.moneytherapy.ui.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.moneytherapy.feature_components.goals.domain.models.Goals
+import com.example.moneytherapy.feature_components.goals.domain.usecases.CreateGoalUseCase
 import com.example.moneytherapy.ui.states.HomeScreenUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel(){
+class HomeViewModel(
+    private val createGoalUseCase: CreateGoalUseCase
+) : ViewModel(){
+
     private val _uiState = MutableStateFlow(HomeScreenUiState())
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
-
     val tabs = listOf("Investimentos", "Custos Fixos", "Sonhos")
+
+
+    fun createGoal(goal: Goals){
+        viewModelScope.launch {
+            createGoalUseCase(goal)
+        }
+    }
 
     // Atualiza o estado da aba inferior selecionada
     fun onBottomNavItemSelected(index: Int) {
