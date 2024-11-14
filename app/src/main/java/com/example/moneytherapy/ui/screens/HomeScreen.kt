@@ -9,10 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,10 +33,22 @@ import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    onNavigateToInsertGoal: () -> Unit,
 ) {
     Scaffold(
         topBar = { HomeTopAppBar() },
         bottomBar = { NavBar() },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+
+                },
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = contentColorFor(MaterialTheme.colorScheme.primary)
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Inserir")
+            }
+        },
         modifier = modifier
             .padding(0.dp)
             .fillMaxSize()
@@ -124,6 +141,7 @@ fun GoalBox(
             )
         }
     }
+
 }
 
 
@@ -131,7 +149,9 @@ fun GoalBox(
 @Composable
 fun HomePreview(){
     MoneyTherapyTheme {
-        HomeScreen()
+        HomeScreen(onNavigateToInsertGoal = {
+            navController.navigate("insertGoal")
+        })
     }
 }
 

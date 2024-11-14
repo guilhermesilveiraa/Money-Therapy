@@ -8,8 +8,4 @@ class CreateGoalUseCase(private val repository: GoalsRepository) {
         repository.saveGoal(goal)
     }
 
-
-
-
-
 }

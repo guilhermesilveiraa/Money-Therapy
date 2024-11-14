@@ -21,7 +21,7 @@ class HomeViewModel(
     val tabs = listOf("Investimentos", "Custos Fixos", "Sonhos")
 
 
-    fun createGoal(goal: Goals){
+    fun onBottomItemCreateGoal(goal: Goals){
         viewModelScope.launch {
             createGoalUseCase(goal)
         }
@@ -44,5 +44,6 @@ class HomeViewModel(
             )
         }
     }
+
 
 }
