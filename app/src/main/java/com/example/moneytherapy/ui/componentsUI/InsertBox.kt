@@ -2,7 +2,6 @@ package com.example.moneytherapy.ui.componentsUI
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,23 +23,25 @@ import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
 @Composable
 fun InsertBox(
     label: String,
-    modifier: Modifier = Modifier
-){
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit // Aceita uma função com parâmetro String
+) {
     var expanded by remember { mutableStateOf(false) }
-    var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
+
     OutlinedCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable { expanded = !expanded }
             .padding(8.dp),
     ) {
-        Column(modifier = Modifier.padding(16.dp)){
+        Column(modifier = Modifier.padding(16.dp)) {
             Text(text = if (expanded) label else label)
             if (expanded) {
                 // Exibe o campo de entrada quando expandido
                 OutlinedTextField(
-                    value = textFieldValue,
-                    onValueChange = { textFieldValue = it },
+                    value = value, // Vincula o valor recebido como parâmetro
+                    onValueChange = onValueChange, // Atualiza diretamente o estado externo
                     label = { Text(label) },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -49,16 +50,14 @@ fun InsertBox(
             }
         }
     }
-
-
-
 }
 
 
-@Preview(showBackground = true)
+
+/*@Preview(showBackground = true)
 @Composable
 fun InsertBoxPreview(){
     MoneyTherapyTheme {
-        InsertBox("Alo")
+        InsertBox("Alo", value = goalTitle, onValueChange = { goalTitle = it })
     }
-}
+}*/

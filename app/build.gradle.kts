@@ -44,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.navigation:navigation-compose:2.7.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -71,6 +72,7 @@ dependencies {
     //room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
     ksp(libs.androidx.room.compiler)
 
     // Dependency injection

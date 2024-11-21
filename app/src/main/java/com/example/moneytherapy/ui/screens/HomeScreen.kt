@@ -144,15 +144,15 @@ fun GoalBox(
 
 }
 
-
+/*
 @Preview(showBackground = true, device = "spec:width=411dp,height=731dp,dpi=480")
 @Composable
 fun HomePreview(){
     MoneyTherapyTheme {
         HomeScreen(onNavigateToInsertGoal = {
-            navController.navigate("insertGoal")
+            //navController.navigate("insertGoal")
         })
     }
 }
-
+*/
 

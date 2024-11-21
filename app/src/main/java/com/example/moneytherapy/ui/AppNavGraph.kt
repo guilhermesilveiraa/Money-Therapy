@@ -5,11 +5,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.ui.screens.HomeScreen
 import com.example.moneytherapy.ui.screens.InsertGoalsScreen
 
 @Composable
-fun AppNavGraph(navController: NavHostController, startDestination: String = "home") {
+fun AppNavGraph(
+    navController: NavHostController,
+    startDestination: String = "home",
+    onSaveGoal: (Goals) -> Unit
+) {
     NavHost(
         navController = navController,
         startDestination = startDestination

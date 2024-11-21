@@ -20,7 +20,8 @@ import androidx.compose.ui.unit.dp
 fun IntegerInputField(
     label: String,
     modifier: Modifier = Modifier,
-    onValueChange: (Int?) -> Unit // Recebe o valor inteiro ou null se o campo estiver vazio
+    onValueChange: (Int?) -> Unit, // Recebe o valor inteiro ou null se o campo estiver vazio
+    value: Int
 ) {
     var text by remember { mutableStateOf("") }
 
@@ -41,10 +42,10 @@ fun IntegerInputField(
     )
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun IntegerInputFieldPreview() {
-    IntegerInputField(label = "Digite um número inteiro") { value ->
+    IntegerInputField(label = "Digite um número inteiro", onValueChange = { value ->
         println("Número inteiro inserido: $value")
-    }
-}
+    }, value = goalValue)
+}*/

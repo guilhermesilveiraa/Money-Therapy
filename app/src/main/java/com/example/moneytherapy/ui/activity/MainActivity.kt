@@ -1,17 +1,16 @@
+// MainActivity.kt
 package com.example.moneytherapy.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
+import com.example.moneytherapy.ui.navigation.AppNavGraph
+import com.example.moneytherapy.ui.viewModel.HomeViewModel
 import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
+import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,30 +18,27 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MoneyTherapyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val navController = rememberNavController()
+                val viewModel: HomeViewModel = viewModel()
+
+                AppNavGraph(
+                    navController = navController,
+                    startDestination = "home",
+                    onSaveGoal = { goal: Goals ->
+                        viewModel.onBottomItemCreateGoal(goal)
+                    }
+                )
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     MoneyTherapyTheme {
         Greeting("Android")
     }
-}
+}*/

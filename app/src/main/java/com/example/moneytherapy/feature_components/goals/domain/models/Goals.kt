@@ -5,15 +5,14 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity(tableName = "Goals")
 data class Goals(
     @PrimaryKey(autoGenerate = true)
-    val id : Long,
+    val id: Long, // Mudamos para Long para ser compatível com auto incremento
     var title: String?,
-    var value: Int, //Valor conquistado
+    var value: Int, // Valor conquistado
     var goal: Int, // Valor do objetivo em reais
-    var type: Int // 1: Curto Prazo, 2: Médio Prazo, 3: Longo Prazo
+    var type: String // Prazo do objetivo (Curto Prazo, Médio Prazo, Longo Prazo)
 ) : Parcelable {
 
     // Sobrescrevendo o metodo que retorna zero por padrão
@@ -27,7 +26,7 @@ data class Goals(
         parcel.writeString(title)
         parcel.writeInt(value)
         parcel.writeInt(goal)
-        parcel.writeInt(type)
+        parcel.writeString(type)
     }
 
     // Objeto CREATOR que serve para recriar o objeto a partir de um Parcel
@@ -35,11 +34,11 @@ data class Goals(
         override fun createFromParcel(parcel: Parcel): Goals {
             // Criando o objeto Goals a partir dos dados presentes no Parcel
             return Goals(
-                parcel.readLong(),
-                parcel.readString(),
-                parcel.readInt(),
-                parcel.readInt(),
-                parcel.readInt()
+                id = parcel.readLong(),
+                title = parcel.readString(),
+                value = parcel.readInt(),
+                goal = parcel.readInt(),
+                type = parcel.readString() ?: ""
             )
         }
 
