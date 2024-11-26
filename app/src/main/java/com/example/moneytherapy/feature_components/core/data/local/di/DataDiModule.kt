@@ -26,6 +26,7 @@ object DataDiModule {
     }
 
     @Provides
+    @Singleton
     fun provideGoalsDao(database: MoneyTherapyDatabase) : GoalsDao {
         return database.goalsDao()
     }

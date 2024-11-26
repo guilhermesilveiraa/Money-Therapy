@@ -6,13 +6,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.feature_components.goals.domain.usecases.CreateGoalUseCase
 import com.example.moneytherapy.ui.states.HomeScreenUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val createGoalUseCase: CreateGoalUseCase
 ) : ViewModel(){
 
