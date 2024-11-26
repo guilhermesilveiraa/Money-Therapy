@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.moneytherapy.ui.navigation.AppNavGraph
@@ -19,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MoneyTherapyTheme {
                 val navController = rememberNavController()
-                val viewModel: HomeViewModel = viewModel()
+                val viewModel: HomeViewModel = hiltViewModel()
 
                 AppNavGraph(
                     navController = navController,
