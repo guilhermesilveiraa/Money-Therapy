@@ -1,27 +1,31 @@
 package com.example.moneytherapy.feature_components.core.data.local.repository
 import com.example.moneytherapy.feature_components.core.data.local.dao.GoalsDao
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
+import com.example.moneytherapy.feature_components.goals.domain.repository.GoalsRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GoalsRepositoryImpl(
+@Singleton
+class GoalsRepositoryImpl  @Inject constructor(
     private val goalsDao: GoalsDao
-) {
-    suspend fun saveGoals(goal: Goals){
+): GoalsRepository {
+    override suspend fun saveGoals(goal: Goals){
         goalsDao.save(goal)
     }
-    suspend fun getShortTimeGoals(): Flow<List<Goals>> {
+    override suspend fun getShortTimeGoals(): List<Goals> {
         return goalsDao.getAllShortGoals()
     }
 
-    suspend fun getMediumTimeGoals(): Flow<List<Goals>>{
-        return goalsDao.getAllMediumGoals()
+    override suspend fun getMediumTimeGoals(): List<Goals> {
+        return this.goalsDao.getAllMediumGoals()
     }
 
-    suspend fun getLongTimeGoals(): Flow<List<Goals>>{
+    override suspend fun getLongTimeGoals(): List<Goals>{
         return goalsDao.getAllLargeGoals()
     }
 
-    suspend fun updateGoal(goal: Goals){
+    override suspend fun updateGoal(goal: Goals){
         goalsDao.update(goal)
     }
 }
