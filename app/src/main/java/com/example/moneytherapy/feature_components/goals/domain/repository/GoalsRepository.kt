@@ -1,6 +1,7 @@
 package com.example.moneytherapy.feature_components.goals.domain.repository
 
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
+import kotlinx.coroutines.flow.Flow
 
 interface GoalsRepository {
 
@@ -12,17 +13,18 @@ interface GoalsRepository {
     /**
      * Get the short-term goals
      */
-    suspend fun getShortTimeGoals(): List<Goals>
+
+    suspend fun getShortTimeGoals(): Flow<List<Goals>>
 
     /**
      * Get the medium-term goals
      */
-    suspend fun getMediumTimeGoals(): List<Goals>
+    suspend fun getMediumTimeGoals(): Flow<List<Goals>>
 
     /**
      * Get the long-term goals
      */
-    suspend fun getLongTimeGoals(): List<Goals>
+    suspend fun getLongTimeGoals(): Flow<List<Goals>>
 
     /**
      * Update the goals in the database

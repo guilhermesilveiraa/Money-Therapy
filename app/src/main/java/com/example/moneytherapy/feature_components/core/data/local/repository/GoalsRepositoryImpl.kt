@@ -10,18 +10,19 @@ import javax.inject.Singleton
 class GoalsRepositoryImpl  @Inject constructor(
     private val goalsDao: GoalsDao
 ): GoalsRepository {
-    override suspend fun saveGoals(goal: Goals){
+
+    override suspend fun saveGoal(goal: Goals){
         goalsDao.save(goal)
     }
-    override suspend fun getShortTimeGoals(): List<Goals> {
+    override suspend fun getShortTimeGoals(): Flow<List<Goals>> {
         return goalsDao.getAllShortGoals()
     }
 
-    override suspend fun getMediumTimeGoals(): List<Goals> {
-        return this.goalsDao.getAllMediumGoals()
+    override suspend fun getMediumTimeGoals(): Flow<List<Goals>> {
+        return goalsDao.getAllMediumGoals()
     }
 
-    override suspend fun getLongTimeGoals(): List<Goals>{
+    override suspend fun getLongTimeGoals(): Flow<List<Goals>> {
         return goalsDao.getAllLargeGoals()
     }
 
