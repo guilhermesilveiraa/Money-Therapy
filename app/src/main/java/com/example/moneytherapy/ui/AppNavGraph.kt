@@ -29,6 +29,7 @@ fun AppNavGraph(
         composable("insertGoal") {
             InsertGoalsScreen(
                 onSaveGoal = {
+                    goal-> onSaveGoal(goal)
                     navController.navigate("home")
                 }
             )
