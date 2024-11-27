@@ -41,7 +41,7 @@ fun HomeScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-
+                    onNavigateToInsertGoal()
                 },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = contentColorFor(MaterialTheme.colorScheme.primary)
