@@ -15,6 +15,7 @@ data class Goals(
     var type: String // Prazo do objetivo (Curto Prazo, Médio Prazo, Longo Prazo)
 ) : Parcelable {
 
+
     // Sobrescrevendo o metodo que retorna zero por padrão
     override fun describeContents(): Int {
         return 0

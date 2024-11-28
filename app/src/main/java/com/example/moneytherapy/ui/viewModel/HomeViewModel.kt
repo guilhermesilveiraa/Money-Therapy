@@ -31,13 +31,10 @@ class HomeViewModel @Inject constructor(
     // Função para buscar os objetivos de curto prazo
     private fun fetchShortTimeGoals() {
         viewModelScope.launch {
-            try {
-                val shortGoals = getShortGoalUseCase() // Chama o UseCase
+            getShortGoalUseCase().collect { goals ->
                 _uiState.update { currentState ->
-                    currentState.copy(shortTermGoals = shortGoals)
+                    currentState.copy(shortTermGoals = goals) // Atualiza a lista de objetivos
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
     }
