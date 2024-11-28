@@ -1,9 +1,13 @@
 package com.example.moneytherapy.ui.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.feature_components.goals.domain.usecases.CreateGoalUseCase
+import com.example.moneytherapy.feature_components.goals.domain.usecases.GetLongGoalUseCase
+import com.example.moneytherapy.feature_components.goals.domain.usecases.GetMediumGoalUseCase
 import com.example.moneytherapy.feature_components.goals.domain.usecases.GetShortGoalUseCase
 import com.example.moneytherapy.ui.states.HomeScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val createGoalUseCase: CreateGoalUseCase,
-    private val getShortGoalUseCase: GetShortGoalUseCase
+    private val getShortGoalUseCase: GetShortGoalUseCase,
+    private val getMediumGoalUseCase: GetMediumGoalUseCase,
+    private val getLongGoalUseCase: GetLongGoalUseCase
 ) : ViewModel(){
 
     private val _uiState = MutableStateFlow(HomeScreenUiState())
@@ -26,14 +32,36 @@ class HomeViewModel @Inject constructor(
 
     init {
         fetchShortTimeGoals()
+        fetchMediumTimeGoals()
     }
 
-    // Função para buscar os objetivos de curto prazo
     private fun fetchShortTimeGoals() {
         viewModelScope.launch {
             getShortGoalUseCase().collect { goals ->
                 _uiState.update { currentState ->
-                    currentState.copy(shortTermGoals = goals) // Atualiza a lista de objetivos
+                    Log.d("ViewModel", "Short-term goals: $goals")
+                    currentState.copy(isLoading = false)
+                }
+            }
+        }
+    }
+
+    private fun fetchLongTimeGoals() {
+        viewModelScope.launch {
+            getLongGoalUseCase().collect { goals ->
+                _uiState.update { currentState ->
+                    Log.d("ViewModel", "Long-term goals: $goals")
+                    currentState.copy(isLoading = false)
+                }
+            }
+        }
+    }
+    private fun fetchMediumTimeGoals() {
+        viewModelScope.launch {
+            getMediumGoalUseCase().collect { goals ->
+                _uiState.update { currentState ->
+                    Log.d("ViewModel", "Medium-term goals: $goals")
+                    currentState.copy(isLoading = false)
                 }
             }
         }

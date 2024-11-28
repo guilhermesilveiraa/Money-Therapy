@@ -21,22 +21,23 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.moneytherapy.ui.componentsUI.HomeTopAppBar
 import com.example.moneytherapy.ui.componentsUI.NavBar
 import com.example.moneytherapy.ui.viewModel.HomeViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateToInsertGoal: () -> Unit,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     Scaffold(
@@ -63,29 +64,36 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-
             GoalBox(
                 title = "Curto Prazo",
-                items = uiState.shortTermGoals.map{ goal ->
-                    goal.title to goal.value / 100f
+                itemsFlow = uiState.shortTermGoals.map { goalsList ->
+                    goalsList.map { goal ->
+                        goal.title to (goal.value / 1f)
+                    }
                 }
             )
 
-            // Exemplo de uma box de "Médio Prazo"
-            /*GoalBox(
-                title = "Médio Prazo",
-                items = listOf(
-                    "viagem 20k" to 0.5f
-                )
-            )
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Outro exemplo de box "Médio Prazo"
             GoalBox(
                 title = "Médio Prazo",
-                items = listOf(
-                    "curso 5k" to 0.3f
-                )
-            )*/
+                itemsFlow = uiState.mediumTermGoals.map { goalsList->
+                    goalsList.map { goal ->
+                        goal.title to (goal.value / 1f)
+                    }
+                }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            GoalBox(
+                title = "Longo Prazo",
+                itemsFlow = uiState.longTermGoals.map { goalsList->
+                    goalsList.map { goal ->
+                        goal.title to (goal.value / 1f)
+                    }
+                }
+            )
         }
     }
 }
@@ -93,8 +101,10 @@ fun HomeScreen(
 @Composable
 fun GoalBox(
     title: String,
-    items: List<Pair<String?, Float>> // Agora aceita uma lista de pares (String, Float)
+    itemsFlow: Flow<List<Pair<String?, Float>>>
 ) {
+    val items by itemsFlow.collectAsState(initial = emptyList()) // Coleta os valores do Flow
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -103,50 +113,37 @@ fun GoalBox(
             .padding(16.dp)
     ) {
         Column {
-            // Título (Curto Prazo, Médio Prazo, etc)
             Text(
                 text = title,
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Renderiza cada item com sua barra de progresso individual
             items.forEach { (itemName, progress) ->
                 Column(
                     modifier = Modifier.padding(bottom = 8.dp)
                 ) {
-                    // Nome do item
-                    if (itemName != null) {
-                        Text(
-                            text = itemName,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
+                    Text(
+                        text = itemName ?: "Sem título",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
 
                     Spacer(modifier = Modifier.height(4.dp))
 
-                    // Barra de progresso individual
                     LinearProgressIndicator(
                         progress = progress,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(8.dp)
                             .clip(RoundedCornerShape(4.dp)),
-                        color = if (progress < 0.5f) Color.Red else Color.Green // cor condicional com base no progresso
+                        color = if (progress < 0.5f) Color.Red else Color.Green
                     )
                 }
             }
-
-            // Link de edição
-            Text(
-                text = "edit",
-                color = Color.Red,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.align(Alignment.End)
-            )
         }
     }
 }
+
 
 /*
 @Preview(showBackground = true, device = "spec:width=411dp,height=731dp,dpi=480")
