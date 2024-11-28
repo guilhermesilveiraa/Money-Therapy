@@ -19,22 +19,26 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.moneytherapy.ui.componentsUI.HomeTopAppBar
 import com.example.moneytherapy.ui.componentsUI.NavBar
-import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
+import com.example.moneytherapy.ui.viewModel.HomeViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateToInsertGoal: () -> Unit,
+    viewModel: HomeViewModel = viewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     Scaffold(
         topBar = { HomeTopAppBar() },
         bottomBar = { NavBar() },
@@ -59,17 +63,16 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Exemplo de uma box de "Curto Prazo" com progresso para cada item
+
             GoalBox(
                 title = "Curto Prazo",
-                items = listOf(
-                    "carro 50k" to 0.2f,
-                    "mesa 1k" to 0.8f
-                )
+                items = uiState.shortTermGoals.map{ goal ->
+                    goal.title to goal.value / 100f
+                }
             )
 
             // Exemplo de uma box de "Médio Prazo"
-            GoalBox(
+            /*GoalBox(
                 title = "Médio Prazo",
                 items = listOf(
                     "viagem 20k" to 0.5f
@@ -82,7 +85,7 @@ fun HomeScreen(
                 items = listOf(
                     "curso 5k" to 0.3f
                 )
-            )
+            )*/
         }
     }
 }
@@ -90,7 +93,7 @@ fun HomeScreen(
 @Composable
 fun GoalBox(
     title: String,
-    items: List<Pair<String, Float>> // Lista de tuplas (String, Float)
+    items: List<Pair<String?, Float>> // Agora aceita uma lista de pares (String, Float)
 ) {
     Box(
         modifier = Modifier
@@ -113,10 +116,12 @@ fun GoalBox(
                     modifier = Modifier.padding(bottom = 8.dp)
                 ) {
                     // Nome do item
-                    Text(
-                        text = itemName,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
+                    if (itemName != null) {
+                        Text(
+                            text = itemName,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(4.dp))
 
@@ -141,7 +146,6 @@ fun GoalBox(
             )
         }
     }
-
 }
 
 /*
