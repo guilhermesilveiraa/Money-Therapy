@@ -13,13 +13,13 @@ interface GoalsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(goal: Goals)
 
-    @Query("SELECT * FROM Goals  WHERE type = 1 LIMIT 3")
+    @Query("SELECT * FROM Goals  WHERE type = 'Curto Prazo' LIMIT 3")
     fun getAllShortGoals() : Flow<List<Goals>>
 
-    @Query("SELECT * FROM Goals  WHERE type = 2 LIMIT 3")
+    @Query("SELECT * FROM Goals  WHERE type = 'Médio Prazo' LIMIT 3")
     fun getAllMediumGoals(): Flow<List<Goals>>
 
-    @Query("SELECT * FROM Goals WHERE type = 3 LIMIT 10")
+    @Query("SELECT * FROM Goals WHERE type = 'Longo Prazo' LIMIT 10")
     fun getAllLargeGoals(): Flow<List<Goals>>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

@@ -11,4 +11,5 @@ class GetLongGoalUseCase @Inject constructor(
     suspend operator fun invoke(): Flow<List<Goals>> {
         return repository.getLongTimeGoals()
     }
+
 }

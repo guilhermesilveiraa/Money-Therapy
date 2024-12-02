@@ -40,6 +40,12 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    // Coletar os objetivos de forma síncrona
+    val shortTermGoals = uiState.shortTermGoals
+    val mediumTermGoals = uiState.mediumTermGoals
+    val longTermGoals = uiState.longTermGoals
+
     Scaffold(
         topBar = { HomeTopAppBar() },
         bottomBar = { NavBar() },
@@ -57,19 +63,17 @@ fun HomeScreen(
         modifier = modifier
             .padding(0.dp)
             .fillMaxSize()
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier
-                .padding(it) // Para evitar sobreposição da navbar
+                .padding(paddingValues)
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
             GoalBox(
                 title = "Curto Prazo",
-                itemsFlow = uiState.shortTermGoals.map { goalsList ->
-                    goalsList.map { goal ->
-                        goal.title to (goal.value / 1f)
-                    }
+                items = shortTermGoals.map { goal ->
+                    goal.title to (goal.value.toFloat() / goal.goal.toFloat()).coerceIn(0f, 1f)
                 }
             )
 
@@ -77,10 +81,8 @@ fun HomeScreen(
 
             GoalBox(
                 title = "Médio Prazo",
-                itemsFlow = uiState.mediumTermGoals.map { goalsList->
-                    goalsList.map { goal ->
-                        goal.title to (goal.value / 1f)
-                    }
+                items = mediumTermGoals.map { goal ->
+                    goal.title to (goal.value.toFloat() / goal.goal.toFloat()).coerceIn(0f, 1f)
                 }
             )
 
@@ -88,10 +90,8 @@ fun HomeScreen(
 
             GoalBox(
                 title = "Longo Prazo",
-                itemsFlow = uiState.longTermGoals.map { goalsList->
-                    goalsList.map { goal ->
-                        goal.title to (goal.value / 1f)
-                    }
+                items = longTermGoals.map { goal ->
+                    goal.title to (goal.value.toFloat() / goal.goal.toFloat()).coerceIn(0f, 1f)
                 }
             )
         }
@@ -101,10 +101,8 @@ fun HomeScreen(
 @Composable
 fun GoalBox(
     title: String,
-    itemsFlow: Flow<List<Pair<String?, Float>>>
+    items: List<Pair<String?, Float>>
 ) {
-    val items by itemsFlow.collectAsState(initial = emptyList()) // Coleta os valores do Flow
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -119,32 +117,38 @@ fun GoalBox(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            items.forEach { (itemName, progress) ->
-                Column(
-                    modifier = Modifier.padding(bottom = 8.dp)
-                ) {
-                    Text(
-                        text = itemName ?: "Sem título",
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
+            if (items.isEmpty()) {
+                Text(
+                    text = "Nenhum objetivo encontrado",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray
+                )
+            } else {
+                items.forEach { (itemName, progress) ->
+                    Column(
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    ) {
+                        Text(
+                            text = itemName ?: "Sem título",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(4.dp))
 
-                    LinearProgressIndicator(
-                        progress = progress,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(8.dp)
-                            .clip(RoundedCornerShape(4.dp)),
-                        color = if (progress < 0.5f) Color.Red else Color.Green
-                    )
+                        LinearProgressIndicator(
+                            progress = progress,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(8.dp)
+                                .clip(RoundedCornerShape(4.dp)),
+                            color = if (progress < 0.5f) Color.Red else Color.Green
+                        )
+                    }
                 }
             }
         }
     }
 }
-
-
 /*
 @Preview(showBackground = true, device = "spec:width=411dp,height=731dp,dpi=480")
 @Composable
