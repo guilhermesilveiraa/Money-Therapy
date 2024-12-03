@@ -29,80 +29,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.moneytherapy.ui.componentsUI.CircularProgressIndicator
+import com.example.moneytherapy.ui.componentsUI.GoalBox
 import com.example.moneytherapy.ui.componentsUI.HomeTopAppBar
 import com.example.moneytherapy.ui.componentsUI.NavBar
 import com.example.moneytherapy.ui.viewModel.HomeViewModel
-
-
-@Composable
-fun GoalBox(
-    title: String,
-    items: List<Pair<String?, Float>>
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .background(
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f),
-                shape = RoundedCornerShape(12.dp)
-            )
-            .clip(RoundedCornerShape(12.dp))
-            .padding(16.dp)
-    ) {
-        Column {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-
-            if (items.isEmpty()) {
-                Text(
-                    text = "Nenhum objetivo encontrado",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            } else {
-                items.forEachIndexed { index, (itemName, progress) ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = if (index < items.size - 1) 12.dp else 0.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = itemName ?: "Sem título",
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.weight(1f)
-                            )
-
-                            Text(
-                                text = "${(progress * 100).toInt()}%",
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        CircularProgressIndicator(
-                            progress = progress,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(10.dp)
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun HomeScreen(
@@ -139,36 +69,76 @@ fun HomeScreen(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
+            // Curto Prazo
             GoalBox(
                 title = "Objetivos de Curto Prazo",
                 items = shortTermGoals.map { goal ->
                     "${goal.title} (R$ ${goal.value}/${goal.goal})" to
                             (goal.value.toFloat() / goal.goal.toFloat()).coerceIn(0f, 1f)
+                },
+                onAddValueClick = { goalName ->
+                    // TODO: Implementar lógica para adicionar valor
+                    println("TODO: Adicionar valor para o objetivo $goalName de curto prazo")
+                },
+                onEditClick = { goalName ->
+                    // TODO: Implementar lógica para editar
+                    println("TODO: Editar o objetivo $goalName de curto prazo")
+                },
+                onDeleteClick = { goalName ->
+                    // TODO: Implementar lógica para deletar
+                    println("TODO: Deletar o objetivo $goalName de curto prazo")
                 }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Médio Prazo
             GoalBox(
                 title = "Objetivos de Médio Prazo",
                 items = mediumTermGoals.map { goal ->
                     "${goal.title} (R$ ${goal.value}/${goal.goal})" to
                             (goal.value.toFloat() / goal.goal.toFloat()).coerceIn(0f, 1f)
+                },
+                onAddValueClick = { goalName ->
+                    // TODO: Implementar lógica para adicionar valor
+                    println("TODO: Adicionar valor para o objetivo $goalName de médio prazo")
+                },
+                onEditClick = { goalName ->
+                    // TODO: Implementar lógica para editar
+                    println("TODO: Editar o objetivo $goalName de médio prazo")
+                },
+                onDeleteClick = { goalName ->
+                    // TODO: Implementar lógica para deletar
+                    println("TODO: Deletar o objetivo $goalName de médio prazo")
                 }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Longo Prazo
             GoalBox(
                 title = "Objetivos de Longo Prazo",
                 items = longTermGoals.map { goal ->
                     "${goal.title} (R$ ${goal.value}/${goal.goal})" to
                             (goal.value.toFloat() / goal.goal.toFloat()).coerceIn(0f, 1f)
+                },
+                onAddValueClick = { goalName ->
+                    // TODO: Implementar lógica para adicionar valor
+                    println("TODO: Adicionar valor para o objetivo $goalName de longo prazo")
+                },
+                onEditClick = { goalName ->
+                    // TODO: Implementar lógica para editar
+                    println("TODO: Editar o objetivo $goalName de longo prazo")
+                },
+                onDeleteClick = { goalName ->
+                    // TODO: Implementar lógica para deletar
+                    println("TODO: Deletar o objetivo $goalName de longo prazo")
                 }
             )
         }
     }
 }
+
 
 /*
 @Preview(showBackground = true, device = "spec:width=411dp,height=731dp,dpi=480")

@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.moneytherapy.ui.screens.GoalBox
 import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
 
 @Composable
@@ -57,6 +56,7 @@ fun CircularProgressIndicator(progress: Float, modifier: Modifier) {
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun GoalBoxPreview() {
@@ -71,3 +71,4 @@ fun GoalBoxPreview() {
         )
     }
 }
+*/
