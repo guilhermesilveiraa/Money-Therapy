@@ -24,7 +24,8 @@ object DataDiModule {
             context,
             MoneyTherapyDatabase::class.java,
             "moneytherapy_database"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

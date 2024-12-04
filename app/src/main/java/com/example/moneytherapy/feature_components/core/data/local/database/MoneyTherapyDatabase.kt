@@ -7,7 +7,7 @@ import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 @Database(
     entities = [Goals::class],
     exportSchema = false,
-    version = 3
+    version = 4
 )
 
 abstract class MoneyTherapyDatabase: RoomDatabase() {

@@ -30,6 +30,9 @@ class MainActivity : ComponentActivity() {
                     onSaveGoal = { goal: Goals ->
                         viewModel.onBottomItemCreateGoal(goal)
                     }
+                    onEditGoal = {goal: Goals ->
+                        viewModel.onEditGoal(goal.id)
+                    }
                 )
             }
         }
