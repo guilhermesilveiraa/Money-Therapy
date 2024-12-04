@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,7 +16,7 @@ import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
 
 @Composable
 fun GoalDetailCard(
-    title: String?,
+    title: String,
     category: String,
     currentValue: Double,
     targetValue: Double,
@@ -27,6 +28,14 @@ fun GoalDetailCard(
     val progress = (currentValue / targetValue).coerceIn(0.0, 1.0)
     val isCompleted = progress >= 1.0
 
+    // Define theme colors based on category
+    val themeColor = when (category) {
+        "Curto Prazo" -> Color(0xFF7E8B99)  // Slate gray
+        "Médio Prazo" -> Color(0xFF8B8589)  // Taupe gray
+        "Longo Prazo" -> Color(0xFF8C7B6D)  // Warm gray
+        else -> MaterialTheme.colorScheme.primary
+    }
+
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,7 +44,6 @@ fun GoalDetailCard(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            // Header with Icon, Title, and Action Buttons
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(),
@@ -46,21 +54,19 @@ fun GoalDetailCard(
                         imageVector = icon,
                         contentDescription = null,
                         modifier = Modifier.size(40.dp),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = themeColor
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
-                        title?.let {
-                            Text(
-                                text = it,
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold
+                        )
                         Text(
                             text = category,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = themeColor
                         )
                     }
                 }
@@ -70,17 +76,14 @@ fun GoalDetailCard(
                         Icon(
                             imageVector = Icons.Default.Edit,
                             contentDescription = "Editar Objetivo",
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = themeColor
                         )
                     }
                     IconButton(onClick = onDeleteClick) {
                         Icon(
                             imageVector = Icons.Default.CheckCircle,
-                            contentDescription = "Deletar Objetivo",
-                            tint = if(isCompleted)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                            contentDescription = "Status do Objetivo",
+                            tint = if (isCompleted) themeColor else themeColor.copy(alpha = 0.3f)
                         )
                     }
                 }
@@ -88,7 +91,6 @@ fun GoalDetailCard(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Progress Information
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -101,19 +103,20 @@ fun GoalDetailCard(
                     text = "${(progress * 100).toInt()}%",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = themeColor
                 )
             }
 
             Spacer(modifier = Modifier.height(8.dp))
             LinearProgressIndicator(
                 progress = progress.toFloat(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                color = themeColor,
+                trackColor = themeColor.copy(alpha = 0.2f)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Financial Details
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -125,7 +128,7 @@ fun GoalDetailCard(
                             imageVector = Icons.Default.MonetizationOn,
                             contentDescription = null,
                             modifier = Modifier.size(20.dp),
-                            tint = MaterialTheme.colorScheme.secondary
+                            tint = themeColor
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
@@ -138,7 +141,7 @@ fun GoalDetailCard(
                             imageVector = Icons.Default.MonetizationOn,
                             contentDescription = null,
                             modifier = Modifier.size(20.dp),
-                            tint = MaterialTheme.colorScheme.tertiary
+                            tint = themeColor.copy(alpha = 0.7f)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
@@ -150,19 +153,19 @@ fun GoalDetailCard(
                 Text(
                     text = "Meta: R$ ${String.format("%.2f", targetValue)}",
                     style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = themeColor
                 )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Add Value Button
             Button(
                 onClick = onAddValueClick,
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    containerColor = themeColor,
+                    contentColor = Color.White
                 )
             ) {
                 Icon(

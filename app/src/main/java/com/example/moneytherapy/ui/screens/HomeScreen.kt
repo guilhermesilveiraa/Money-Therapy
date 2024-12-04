@@ -68,39 +68,45 @@ fun HomeScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             shortTermGoals.forEach { goal ->
-                GoalDetailCard(
-                    title = goal.title,
-                    category = "Curto Prazo",
-                    currentValue = goal.value.toDouble(),
-                    targetValue = goal.goal.toDouble(),
-                    onEditClick = { viewModel.onEditGoal(goal.id) },
-                    onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
-                    onAddValueClick = { viewModel.onAddValue(goal.id) }
-                )
+                goal.title?.let {
+                    GoalDetailCard(
+                        title = it,
+                        category = "Curto Prazo",
+                        currentValue = goal.value.toDouble(),
+                        targetValue = goal.goal.toDouble(),
+                        onEditClick = { viewModel.onEditGoal(goal.id) },
+                        onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
+                        onAddValueClick = { viewModel.onAddValue(goal.id) }
+                    )
+                }
             }
 
             mediumTermGoals.forEach { goal ->
-                GoalDetailCard(
-                    title = goal.title,
-                    category = "Médio Prazo",
-                    currentValue = goal.value.toDouble(),
-                    targetValue = goal.goal.toDouble(),
-                    onEditClick = { viewModel.onEditGoal(goal.id) },
-                    onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
-                    onAddValueClick = { viewModel.onAddValue(goal.id) }
-                )
+                goal.title?.let {
+                    GoalDetailCard(
+                        title = it,
+                        category = "Médio Prazo",
+                        currentValue = goal.value.toDouble(),
+                        targetValue = goal.goal.toDouble(),
+                        onEditClick = { viewModel.onEditGoal(goal.id) },
+                        onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
+                        onAddValueClick = { viewModel.onAddValue(goal.id) }
+                    )
+                }
             }
 
             longTermGoals.forEach { goal ->
-                GoalDetailCard(
-                    title = goal.title,
-                    category = "Longo Prazo",
-                    currentValue = goal.value.toDouble(),
-                    targetValue = goal.goal.toDouble(),
-                    onEditClick = { viewModel.onEditGoal(goal.id) },
-                    onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
-                    onAddValueClick = { viewModel.onAddValue(goal.id) }
-                )
+                goal.title?.let {
+                    GoalDetailCard(
+                        title = it,
+                        category = "Longo Prazo",
+                        currentValue = goal.value.toDouble(),
+                        targetValue = goal.goal.toDouble(),
+                        onEditClick = { viewModel.onEditGoal(goal.id) },
+                        onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
+                        onAddValueClick = { viewModel.onAddValue(goal.id) }
+                    )
+                }
             }
         }
     }
