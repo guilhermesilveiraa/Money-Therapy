@@ -1,5 +1,13 @@
 package com.example.moneytherapy.ui.theme
 
+import BackgroundDark
+import BackgroundPrimary
+import BackgroundSecondary
+import PrimaryAccent
+import PrimaryDark
+import PrimaryLight
+import TextLight
+import TextPrimary
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -10,26 +18,31 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = BackgroundPrimary,
-    secondary = BackgroundSecondary,
-    tertiary = TextPrimary,
-)
+// In ui/theme/Theme.kt
 
 private val LightColorScheme = lightColorScheme(
-    primary = BackgroundPrimary,
-    secondary = BackgroundSecondary,
-    tertiary = TextPrimary,
+    primary = PrimaryDark,
+    secondary = PrimaryLight,
+    tertiary = PrimaryAccent,
+    background = BackgroundPrimary,
+    surface = BackgroundSecondary,
+    onPrimary = TextLight,
+    onSecondary = TextLight,
+    onTertiary = TextPrimary,
+    onBackground = TextPrimary,
+    onSurface = TextPrimary
+)
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+private val DarkColorScheme = darkColorScheme(
+    primary = PrimaryLight,
+    secondary = PrimaryDark,
+    tertiary = PrimaryAccent,
+    background = BackgroundDark,
+    surface = BackgroundDark.copy(alpha = 0.7f),
+    onPrimary = TextLight,
+    onSecondary = TextLight,
+    onBackground = TextLight,
+    onSurface = TextLight
 )
 
 @Composable
