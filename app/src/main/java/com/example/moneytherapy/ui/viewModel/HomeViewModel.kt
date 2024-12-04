@@ -102,5 +102,17 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun onEditGoal(id: Long) {
+
+    }
+
+    fun onDeleteGoal(id: Long) {
+
+    }
+
+    fun onAddValue(id: Long) {
+
+    }
+
 
 }

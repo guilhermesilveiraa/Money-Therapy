@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.moneytherapy.ui.componentsUI.CircularProgressIndicator
 import com.example.moneytherapy.ui.componentsUI.GoalBox
+import com.example.moneytherapy.ui.componentsUI.GoalDetailCard
 import com.example.moneytherapy.ui.componentsUI.HomeTopAppBar
 import com.example.moneytherapy.ui.componentsUI.NavBar
 import com.example.moneytherapy.ui.viewModel.HomeViewModel
@@ -42,7 +43,6 @@ fun HomeScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    // Coletar os objetivos de forma síncrona
     val shortTermGoals = uiState.shortTermGoals
     val mediumTermGoals = uiState.mediumTermGoals
     val longTermGoals = uiState.longTermGoals
@@ -59,86 +59,52 @@ fun HomeScreen(
                 Icon(Icons.Default.Add, contentDescription = "Inserir")
             }
         },
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-                .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            // Curto Prazo
-            GoalBox(
-                title = "Objetivos de Curto Prazo",
-                items = shortTermGoals.map { goal ->
-                    "${goal.title} (R$ ${goal.value}/${goal.goal})" to
-                            (goal.value.toFloat() / goal.goal.toFloat()).coerceIn(0f, 1f)
-                },
-                onAddValueClick = { goalName ->
-                    // TODO: Implementar lógica para adicionar valor
-                    println("TODO: Adicionar valor para o objetivo $goalName de curto prazo")
-                },
-                onEditClick = { goalName ->
-                    // TODO: Implementar lógica para editar
-                    println("TODO: Editar o objetivo $goalName de curto prazo")
-                },
-                onDeleteClick = { goalName ->
-                    // TODO: Implementar lógica para deletar
-                    println("TODO: Deletar o objetivo $goalName de curto prazo")
-                }
-            )
+            shortTermGoals.forEach { goal ->
+                GoalDetailCard(
+                    title = goal.title,
+                    category = "Curto Prazo",
+                    currentValue = goal.value.toDouble(),
+                    targetValue = goal.goal.toDouble(),
+                    onEditClick = { viewModel.onEditGoal(goal.id) },
+                    onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
+                    onAddValueClick = { viewModel.onAddValue(goal.id) }
+                )
+            }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            mediumTermGoals.forEach { goal ->
+                GoalDetailCard(
+                    title = goal.title,
+                    category = "Médio Prazo",
+                    currentValue = goal.value.toDouble(),
+                    targetValue = goal.goal.toDouble(),
+                    onEditClick = { viewModel.onEditGoal(goal.id) },
+                    onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
+                    onAddValueClick = { viewModel.onAddValue(goal.id) }
+                )
+            }
 
-            // Médio Prazo
-            GoalBox(
-                title = "Objetivos de Médio Prazo",
-                items = mediumTermGoals.map { goal ->
-                    "${goal.title} (R$ ${goal.value}/${goal.goal})" to
-                            (goal.value.toFloat() / goal.goal.toFloat()).coerceIn(0f, 1f)
-                },
-                onAddValueClick = { goalName ->
-                    // TODO: Implementar lógica para adicionar valor
-                    println("TODO: Adicionar valor para o objetivo $goalName de médio prazo")
-                },
-                onEditClick = { goalName ->
-                    // TODO: Implementar lógica para editar
-                    println("TODO: Editar o objetivo $goalName de médio prazo")
-                },
-                onDeleteClick = { goalName ->
-                    // TODO: Implementar lógica para deletar
-                    println("TODO: Deletar o objetivo $goalName de médio prazo")
-                }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Longo Prazo
-            GoalBox(
-                title = "Objetivos de Longo Prazo",
-                items = longTermGoals.map { goal ->
-                    "${goal.title} (R$ ${goal.value}/${goal.goal})" to
-                            (goal.value.toFloat() / goal.goal.toFloat()).coerceIn(0f, 1f)
-                },
-                onAddValueClick = { goalName ->
-                    // TODO: Implementar lógica para adicionar valor
-                    println("TODO: Adicionar valor para o objetivo $goalName de longo prazo")
-                },
-                onEditClick = { goalName ->
-                    // TODO: Implementar lógica para editar
-                    println("TODO: Editar o objetivo $goalName de longo prazo")
-                },
-                onDeleteClick = { goalName ->
-                    // TODO: Implementar lógica para deletar
-                    println("TODO: Deletar o objetivo $goalName de longo prazo")
-                }
-            )
+            longTermGoals.forEach { goal ->
+                GoalDetailCard(
+                    title = goal.title,
+                    category = "Longo Prazo",
+                    currentValue = goal.value.toDouble(),
+                    targetValue = goal.goal.toDouble(),
+                    onEditClick = { viewModel.onEditGoal(goal.id) },
+                    onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
+                    onAddValueClick = { viewModel.onAddValue(goal.id) }
+                )
+            }
         }
     }
 }
-
 
 /*
 @Preview(showBackground = true, device = "spec:width=411dp,height=731dp,dpi=480")

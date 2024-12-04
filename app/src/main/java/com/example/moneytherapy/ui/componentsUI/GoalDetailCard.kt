@@ -2,8 +2,7 @@ package com.example.moneytherapy.ui.componentsUI
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Category
-import androidx.compose.material.icons.filled.MonetizationOn
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,13 +15,17 @@ import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
 
 @Composable
 fun GoalDetailCard(
-    title: String,
+    title: String?,
     category: String,
     currentValue: Double,
     targetValue: Double,
-    icon: ImageVector = Icons.Default.Category
+    icon: ImageVector = Icons.Default.Category,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit,
+    onAddValueClick: () -> Unit
 ) {
     val progress = (currentValue / targetValue).coerceIn(0.0, 1.0)
+    val isCompleted = progress >= 1.0
 
     ElevatedCard(
         modifier = Modifier
@@ -32,29 +35,54 @@ fun GoalDetailCard(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            // Header with Icon and Title
+            // Header with Icon, Title, and Action Buttons
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                Column {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(40.dp),
+                        tint = MaterialTheme.colorScheme.primary
                     )
-                    Text(
-                        text = category,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Column {
+                        title?.let {
+                            Text(
+                                text = it,
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                        Text(
+                            text = category,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                Row {
+                    IconButton(onClick = onEditClick) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = "Editar Objetivo",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    IconButton(onClick = onDeleteClick) {
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = "Deletar Objetivo",
+                            tint = if(isCompleted)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                        )
+                    }
                 }
             }
 
@@ -79,7 +107,7 @@ fun GoalDetailCard(
 
             Spacer(modifier = Modifier.height(8.dp))
             LinearProgressIndicator(
-                progress = progress,
+                progress = progress.toFloat(),
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -88,7 +116,8 @@ fun GoalDetailCard(
             // Financial Details
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -124,6 +153,26 @@ fun GoalDetailCard(
                     fontWeight = FontWeight.Bold
                 )
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Add Value Button
+            Button(
+                onClick = onAddValueClick,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Adicionar Valor",
+                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Adicionar Valor")
+            }
         }
     }
 }
@@ -136,7 +185,10 @@ fun GoalDetailCardPreview() {
             title = "Comprar Notebook",
             category = "Tecnologia",
             currentValue = 1500.0,
-            targetValue = 3000.0
+            targetValue = 3000.0,
+            onEditClick = { /* Ação de editar */ },
+            onDeleteClick = { /* Ação de deletar */ },
+            onAddValueClick = { /* Ação de adicionar valor */ }
         )
     }
 }
