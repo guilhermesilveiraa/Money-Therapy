@@ -1,6 +1,8 @@
 package com.example.moneytherapy.feature_components.core.data.local.repository
 
+
 import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.moneytherapy.feature_components.theme.domain.models.ThemeMode
@@ -10,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ThemeRepositoryImpl @Inject constructor(
-    private val dataStore: DataStore<androidx.datastore.preferences.core.Preferences>
+    private val dataStore: DataStore<Preferences>
 ) : ThemeRepository {
     private val THEME_KEY = stringPreferencesKey("theme_mode")
 
@@ -26,7 +28,6 @@ class ThemeRepositoryImpl @Inject constructor(
         }
     }
 }
-
 /*
     O metodo getThemeMode pode ser destrinchado da seguinte forma:
 

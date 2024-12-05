@@ -2,6 +2,11 @@ package com.example.moneytherapy.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+
+
+
+
+
 // Base colors that don't change between themes
 val Gold = Color(0xFFB8860B)
 val Green = Color(0xFF4CAF50)
