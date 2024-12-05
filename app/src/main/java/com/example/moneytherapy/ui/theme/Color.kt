@@ -1,27 +1,49 @@
-// In ui/theme/Color.kt
+package com.example.moneytherapy.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Primary Colors
-val PrimaryDark = Color(0xFF1B3D6B)      // Deep navy blue - main brand color
-val PrimaryLight = Color(0xFF3A6EA5)      // Lighter blue - secondary brand color
-val PrimaryAccent = Color(0xFFFFB649)     // Golden yellow - accent color
+// Base colors that don't change between themes
+val Gold = Color(0xFFB8860B)
+val Green = Color(0xFF4CAF50)
+val Red = Color(0xFFFF5C5C)
 
-// Background Colors
-val BackgroundPrimary = Color(0xFFF8F9FA)    // Light gray-white - main background
-val BackgroundSecondary = Color(0xFFFFFFFF)   // Pure white - card backgrounds
-val BackgroundDark = Color(0xFF2C3E50)        // Dark blue-gray - dark mode background
+// Light Theme Colors
+val LightPrimary = Color(0xFFFFFFFF)
+val LightSecondary = Color(0xFFF5F5F5)
+val LightTextPrimary = Color(0xFF121212)
+val LightTextSecondary = Color(0xFF666666)
+val LightSurface = Color(0xFFFFFFFF)
+val LightBackground = Color(0xFFF8F8F8)
 
-// Text Colors
-val TextPrimary = Color(0xFF2C3E50)          // Dark blue-gray - primary text
-val TextSecondary = Color(0xFF6C757D)        // Medium gray - secondary text
-val TextLight = Color(0xFFF8F9FA)            // Light gray-white - text on dark backgrounds
+// Dark Theme Colors
+val DarkPrimary = Color(0xFF121212)
+val DarkSecondary = Color(0xFF1C1C1E)
+val DarkTextPrimary = Color(0xFFE5E5E5)
+val DarkTextSecondary = Color(0xFFA9A9A9)
+val DarkSurface = Color(0xFF1C1C1E)
+val DarkBackground = Color(0xFF000000)
 
-// Status Colors
-val SuccessGreen = Color(0xFF28A745)         // Success/positive indicators
-val WarningYellow = Color(0xFFFFC107)        // Warning/attention indicators
-val ErrorRed = Color(0xFFDC3545)             // Error/negative indicators
+// Custom color schemes for both themes
+object ThemeColors {
+    val LightColorScheme = androidx.compose.material3.lightColorScheme(
+        primary = Gold,
+        secondary = LightSecondary,
+        background = LightBackground,
+        surface = LightSurface,
+        onPrimary = LightTextPrimary,
+        onSecondary = LightTextSecondary,
+        onBackground = LightTextPrimary,
+        onSurface = LightTextPrimary
+    )
 
-// Progress Colors
-val ProgressBackground = Color(0xFFE9ECEF)    // Progress bar background
-val ProgressFill = Color(0xFF3A6EA5)          // Progress bar fill
+    val DarkColorScheme = androidx.compose.material3.darkColorScheme(
+        primary = Gold,
+        secondary = DarkSecondary,
+        background = DarkBackground,
+        surface = DarkSurface,
+        onPrimary = DarkTextPrimary,
+        onSecondary = DarkTextSecondary,
+        onBackground = DarkTextPrimary,
+        onSurface = DarkTextPrimary
+    )
+}
