@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.moneytherapy.ui.navigation.AppNavGraph
+import com.example.moneytherapy.ui.AppNavGraph
 import com.example.moneytherapy.ui.viewModel.HomeViewModel
 import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals

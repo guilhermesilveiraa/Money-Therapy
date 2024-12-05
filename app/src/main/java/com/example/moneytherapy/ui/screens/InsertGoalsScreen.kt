@@ -2,12 +2,10 @@ package com.example.moneytherapy.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -25,15 +23,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.ui.componentsUI.HomeTopAppBar
-import com.example.moneytherapy.ui.componentsUI.InsertBox
-import com.example.moneytherapy.ui.componentsUI.IntegerInputField
 import com.example.moneytherapy.ui.componentsUI.NavBar
-import com.example.moneytherapy.ui.componentsUI.SelectionDropdown
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.font.FontWeight
@@ -44,8 +38,10 @@ import androidx.compose.ui.text.input.KeyboardType
 @Composable
 fun InsertGoalsScreen(
     modifier: Modifier = Modifier,
-    onSaveGoal: (Goals) -> Unit
+    onSaveGoal: (Goals) -> Unit,
+    onNavigateBack: () -> Boolean
 ) {
+    var goalId by remember { mutableLongStateOf(0L) }
     var goalTitle by remember { mutableStateOf("") }
     var goalValue by remember { mutableIntStateOf(0) }
     var achievedValue by remember { mutableIntStateOf(0) }

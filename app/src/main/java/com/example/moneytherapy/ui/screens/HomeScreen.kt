@@ -8,22 +8,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
@@ -34,15 +20,18 @@ import com.example.moneytherapy.ui.viewModel.ThemeViewModel
 import com.example.moneytherapy.ui.componentsUI.ThemeDialog
 import com.example.moneytherapy.ui.viewModel.HomeViewModel
 
+/**
+ * Main home screen of the Money Therapy application.
+ * Displays all goals categorized by their terms and provides navigation to other screens.
+ */
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateToInsertGoal: () -> Unit,
+    onNavigateToEditGoal: (Long) -> Unit, // Updated to accept Long type for goalId
     viewModel: HomeViewModel = hiltViewModel(),
-    // Add ThemeViewModel as a parameter with default value
     themeViewModel: ThemeViewModel = hiltViewModel()
 ) {
-    // Collect states from both ViewModels
     val uiState by viewModel.uiState.collectAsState()
     var showThemeDialog by remember { mutableStateOf(false) }
 
@@ -63,7 +52,6 @@ fun HomeScreen(
     }
 
     Scaffold(
-        // Update HomeTopAppBar to include the theme click handler
         topBar = {
             HomeTopAppBar(
                 onThemeClick = { showThemeDialog = true }
@@ -72,7 +60,7 @@ fun HomeScreen(
         bottomBar = { NavBar() },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { onNavigateToInsertGoal() },
+                onClick = onNavigateToInsertGoal,
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
@@ -87,7 +75,7 @@ fun HomeScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            // Render short term goals
+            // Render short term goals with proper navigation handling
             shortTermGoals.forEach { goal ->
                 goal.title?.let {
                     GoalDetailCard(
@@ -95,14 +83,14 @@ fun HomeScreen(
                         category = "Curto Prazo",
                         currentValue = goal.value.toDouble(),
                         targetValue = goal.goal.toDouble(),
-                        onEditClick = { viewModel.onEditGoal(goal.id) },
+                        onEditClick = { onNavigateToEditGoal(goal.id) }, // Navigate to edit screen
                         onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
-                        onAddValueClick = { viewModel.onAddValue(goal.id) }
+                        onAddValueClick = { TODO() }
                     )
                 }
             }
 
-            // Render medium term goals
+            // Render medium term goals with proper navigation handling
             mediumTermGoals.forEach { goal ->
                 goal.title?.let {
                     GoalDetailCard(
@@ -110,14 +98,14 @@ fun HomeScreen(
                         category = "Médio Prazo",
                         currentValue = goal.value.toDouble(),
                         targetValue = goal.goal.toDouble(),
-                        onEditClick = { viewModel.onEditGoal(goal.id) },
+                        onEditClick = { onNavigateToEditGoal(goal.id) }, // Navigate to edit screen
                         onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
-                        onAddValueClick = { viewModel.onAddValue(goal.id) }
+                        onAddValueClick = { TODO() }
                     )
                 }
             }
 
-            // Render long term goals
+            // Render long term goals with proper navigation handling
             longTermGoals.forEach { goal ->
                 goal.title?.let {
                     GoalDetailCard(
@@ -125,9 +113,9 @@ fun HomeScreen(
                         category = "Longo Prazo",
                         currentValue = goal.value.toDouble(),
                         targetValue = goal.goal.toDouble(),
-                        onEditClick = { viewModel.onEditGoal(goal.id) },
+                        onEditClick = { onNavigateToEditGoal(goal.id) }, // Navigate to edit screen
                         onDeleteClick = { viewModel.onDeleteGoal(goal.id) },
-                        onAddValueClick = { viewModel.onAddValue(goal.id) }
+                        onAddValueClick = { TODO() }
                     )
                 }
             }
@@ -135,7 +123,6 @@ fun HomeScreen(
     }
 }
 
-// The HomeTopAppBar is now correctly set up to handle theme switching
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopAppBar(
@@ -150,7 +137,7 @@ fun HomeTopAppBar(
             Text(
                 text = title,
                 modifier = Modifier,
-                color = MaterialTheme.colorScheme.onSurface,  // Updated to use theme colors
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 16.sp,
                 fontFamily = FontFamily.Serif
             )
@@ -160,7 +147,7 @@ fun HomeTopAppBar(
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = "Menu de opções",
-                    tint = MaterialTheme.colorScheme.onSurface  // Updated to use theme colors
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             DropdownMenu(
