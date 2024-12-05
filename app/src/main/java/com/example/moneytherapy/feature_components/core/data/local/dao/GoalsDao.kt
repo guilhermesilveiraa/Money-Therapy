@@ -28,5 +28,8 @@ interface GoalsDao {
     @Query("DELETE FROM Goals WHERE id = :goalId")
     suspend fun deleteById(goalId: Long)
 
+    @Query("SELECT * FROM Goals WHERE id = :goalId")
+    suspend fun getGoalById(goalId: Long): Goals?
+
 
 }

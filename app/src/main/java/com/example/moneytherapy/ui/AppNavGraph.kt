@@ -49,7 +49,7 @@ fun AppNavGraph(
 
             EditGoalScreen(
                 goal = goal,
-                onUpdateGoal = { updatedGoal ->
+                onUEGoal = { updatedGoal ->
                     viewModel.onUpdateGoal(updatedGoal)
                 },
                 onDeleteGoal = { id ->

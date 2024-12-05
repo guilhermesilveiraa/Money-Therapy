@@ -33,4 +33,6 @@ interface GoalsRepository {
 
     suspend fun deleteGoal(goalId: Long)
 
+    suspend fun getGoalById(goalId: Long): Goals?
+
 }

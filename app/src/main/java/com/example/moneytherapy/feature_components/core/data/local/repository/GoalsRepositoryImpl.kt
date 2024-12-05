@@ -33,4 +33,8 @@ class GoalsRepositoryImpl  @Inject constructor(
     override suspend fun deleteGoal(goalId: Long) {
         goalsDao.deleteById(goalId)
     }
+
+    override suspend fun getGoalById(goalId: Long): Goals? {
+        return goalsDao.getGoalById(goalId)
+    }
 }
