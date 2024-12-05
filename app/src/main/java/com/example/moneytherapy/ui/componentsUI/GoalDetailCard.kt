@@ -1,8 +1,6 @@
 package com.example.moneytherapy.ui.componentsUI
 
-import PrimaryAccent
-import PrimaryDark
-import PrimaryLight
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -33,9 +31,9 @@ fun GoalDetailCard(
 
     // Define theme colors based on category
     val themeColor = when (category) {
-        "Curto Prazo" -> PrimaryLight
-        "Médio Prazo" -> PrimaryDark
-        "Longo Prazo" -> PrimaryAccent
+        "Curto Prazo" -> MaterialTheme.colorScheme.onSurface
+        "Médio Prazo" -> MaterialTheme.colorScheme.inverseOnSurface
+        "Longo Prazo" -> MaterialTheme.colorScheme.primary
         else -> MaterialTheme.colorScheme.primary
     }
 
