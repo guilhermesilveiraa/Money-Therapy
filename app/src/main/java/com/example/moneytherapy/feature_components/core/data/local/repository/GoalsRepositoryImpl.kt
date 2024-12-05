@@ -29,4 +29,8 @@ class GoalsRepositoryImpl  @Inject constructor(
     override suspend fun updateGoal(goal: Goals){
         goalsDao.update(goal)
     }
+
+    override suspend fun deleteGoal(goalId: Long) {
+        goalsDao.deleteById(goalId)
+    }
 }

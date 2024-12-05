@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.feature_components.goals.domain.usecases.CreateGoalUseCase
+import com.example.moneytherapy.feature_components.goals.domain.usecases.DeleteGoalUseCase
 import com.example.moneytherapy.feature_components.goals.domain.usecases.GetLongGoalUseCase
 import com.example.moneytherapy.feature_components.goals.domain.usecases.GetMediumGoalUseCase
 import com.example.moneytherapy.feature_components.goals.domain.usecases.GetShortGoalUseCase
+import com.example.moneytherapy.feature_components.goals.domain.usecases.UpdateGoalUseCase
 import com.example.moneytherapy.ui.states.HomeScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +24,9 @@ class HomeViewModel @Inject constructor(
     private val createGoalUseCase: CreateGoalUseCase,
     private val getShortGoalUseCase: GetShortGoalUseCase,
     private val getMediumGoalUseCase: GetMediumGoalUseCase,
-    private val getLongGoalUseCase: GetLongGoalUseCase
+    private val getLongGoalUseCase: GetLongGoalUseCase,
+    private val updateGoalUseCase: UpdateGoalUseCase,
+    private val deleteGoalUseCase: DeleteGoalUseCase
 ) : ViewModel(){
 
     private val _uiState = MutableStateFlow(HomeScreenUiState())
@@ -102,17 +106,23 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onEditGoal(id: Long) {
-
+    fun onUpdateGoal(goal: Goals) {
+        viewModelScope.launch {
+            updateGoalUseCase(goal)
+            fetchShortTimeGoals()
+            fetchMediumTimeGoals()
+            fetchLongTimeGoals()
+        }
     }
 
-    fun onDeleteGoal(id: Long) {
-
-    }
-
-    fun onAddValue(id: Long) {
-
-    }
+    fun onDeleteGoal(goalId: Long) {
+        viewModelScope.launch {
+            deleteGoalUseCase(goalId)
+            // Refresh the goals lists
+            fetchShortTimeGoals()
+            fetchMediumTimeGoals()
+            fetchLongTimeGoals()
+        }
 
 
 }

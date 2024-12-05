@@ -30,4 +30,7 @@ interface GoalsRepository {
      * Update the goals in the database
      */
     suspend fun updateGoal(goal: Goals)
+
+    suspend fun deleteGoal(goalId: Long)
+
 }

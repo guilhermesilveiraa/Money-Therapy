@@ -1,14 +1,13 @@
 package com.example.moneytherapy.feature_components.goals.domain.usecases
+
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.feature_components.goals.domain.repository.GoalsRepository
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class UpdateGoalUseCase @Inject constructor(
+class DeleteGoalUseCase @Inject constructor(
     private val repository: GoalsRepository
 ) {
-    suspend operator fun invoke(goal: Goals) {
-        repository.updateGoal(goal)
+    suspend operator fun invoke(goalId: Long) {
+        repository.deleteGoal(goalId)
     }
 }

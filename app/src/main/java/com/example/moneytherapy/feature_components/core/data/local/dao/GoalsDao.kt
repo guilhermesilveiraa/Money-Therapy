@@ -24,4 +24,9 @@ interface GoalsDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(goal: Goals)
+
+    @Query("DELETE FROM Goals WHERE id = :goalId")
+    suspend fun deleteById(goalId: Long)
+
+
 }

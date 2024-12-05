@@ -46,7 +46,6 @@ fun InsertGoalsScreen(
     modifier: Modifier = Modifier,
     onSaveGoal: (Goals) -> Unit
 ) {
-    var goalId by remember { mutableLongStateOf(0L) }
     var goalTitle by remember { mutableStateOf("") }
     var goalValue by remember { mutableIntStateOf(0) }
     var achievedValue by remember { mutableIntStateOf(0) }
