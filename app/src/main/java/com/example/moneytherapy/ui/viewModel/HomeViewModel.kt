@@ -28,9 +28,6 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
 
     private val _selectedGoal = MutableStateFlow<Goals?>(null)
-    val selectedGoal: StateFlow<Goals?> = _selectedGoal.asStateFlow()
-
-    val tabs = listOf("Investimentos", "Custos Fixos", "Sonhos")
 
     init {
         fetchShortTimeGoals()

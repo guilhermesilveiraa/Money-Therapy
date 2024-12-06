@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.example.moneytherapy.ui.viewModel.ThemeViewModel
 
 @HiltViewModel
 class ThemeViewModel @Inject constructor(
@@ -21,10 +22,6 @@ class ThemeViewModel @Inject constructor(
     val themeMode: StateFlow<ThemeMode> = _themeMode.asStateFlow()
 
     init {
-        loadThemeMode()
-    }
-
-    private fun loadThemeMode() {
         viewModelScope.launch {
             _themeMode.value = getThemeModeUseCase()
         }
