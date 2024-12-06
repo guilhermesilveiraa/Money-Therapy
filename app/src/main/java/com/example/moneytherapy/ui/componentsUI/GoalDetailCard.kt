@@ -29,18 +29,20 @@ fun GoalDetailCard(
     val progress = (currentValue / targetValue).coerceIn(0.0, 1.0)
     val isCompleted = progress >= 1.0
 
-    // Define theme colors based on category
     val themeColor = when (category) {
-        "Curto Prazo" -> MaterialTheme.colorScheme.onSurface
-        "Médio Prazo" -> MaterialTheme.colorScheme.inverseOnSurface
-        "Longo Prazo" -> MaterialTheme.colorScheme.primary
+        "Curto Prazo" -> MaterialTheme.colorScheme.primary
+        "Médio Prazo" -> MaterialTheme.colorScheme.secondary
+        "Longo Prazo" -> MaterialTheme.colorScheme.tertiary
         else -> MaterialTheme.colorScheme.primary
     }
 
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(16.dp),
+        colors = CardDefaults.elevatedCardColors(
+            MaterialTheme.colorScheme.surface,
+            )
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -62,6 +64,7 @@ fun GoalDetailCard(
                         Text(
                             text = title,
                             style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
@@ -98,7 +101,8 @@ fun GoalDetailCard(
             ) {
                 Text(
                     text = "Progresso",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = "${(progress * 100).toInt()}%",
@@ -113,7 +117,7 @@ fun GoalDetailCard(
                 progress = progress.toFloat(),
                 modifier = Modifier.fillMaxWidth(),
                 color = themeColor,
-                trackColor = themeColor.copy(alpha = 0.2f)
+                trackColor = MaterialTheme.colorScheme.surfaceVariant
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -134,7 +138,8 @@ fun GoalDetailCard(
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "Atual: R$ ${String.format("%.2f", currentValue)}",
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -142,12 +147,13 @@ fun GoalDetailCard(
                             imageVector = Icons.Default.MonetizationOn,
                             contentDescription = null,
                             modifier = Modifier.size(20.dp),
-                            tint = themeColor.copy(alpha = 0.7f)
+                            tint = MaterialTheme.colorScheme.outline
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "Faltam: R$ ${String.format("%.2f", targetValue - currentValue)}",
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -166,7 +172,7 @@ fun GoalDetailCard(
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = themeColor,
-                    contentColor = Color.White
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
                 Icon(
