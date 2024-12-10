@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
-import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SelectionDropdown(
@@ -57,15 +56,3 @@ fun SelectionDropdown(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SelectionDropdownPreview() {
-    val options = listOf("Opção 1", "Opção 2", "Opção 3")
-
-    SelectionDropdown(
-        options = options,
-        label = "Escolha uma opção"
-    ) { selectedOption ->
-        println("Opção selecionada: $selectedOption")
-    }
-}

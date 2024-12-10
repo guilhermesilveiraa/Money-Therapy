@@ -46,6 +46,7 @@ fun InsertGoalsScreen(
     var goalValue by remember { mutableIntStateOf(0) }
     var achievedValue by remember { mutableIntStateOf(0) }
     var goalType by remember { mutableStateOf("Curto Prazo") }
+    var expanded by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = { HomeTopAppBar() },
@@ -128,8 +129,8 @@ fun InsertGoalsScreen(
                     )
 
                     ExposedDropdownMenuBox(
-                        expanded = false,
-                        onExpandedChange = { },
+                        expanded = expanded,
+                        onExpandedChange = {expanded=it},
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         OutlinedTextField(
@@ -145,13 +146,16 @@ fun InsertGoalsScreen(
                         )
 
                         ExposedDropdownMenu(
-                            expanded = false,
-                            onDismissRequest = { }
+                            expanded = expanded,
+                            onDismissRequest = {expanded=false}
                         ) {
                             listOf("Curto Prazo", "Médio Prazo", "Longo Prazo").forEach { option ->
                                 DropdownMenuItem(
                                     text = { Text(option) },
-                                    onClick = { goalType = option }
+                                    onClick = {
+                                        goalType = option
+                                        expanded = false
+                                    }
                                 )
                             }
                         }
