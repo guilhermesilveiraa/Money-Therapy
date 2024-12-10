@@ -1,6 +1,5 @@
 package com.example.moneytherapy.ui.componentsUI
 
-import com.example.moneytherapy.ui.viewModel.ThemeViewModel
 import android.app.Activity
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -18,13 +17,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.moneytherapy.feature_components.theme.domain.models.ThemeMode
 import com.example.moneytherapy.ui.activity.recreateWithAnimation
+import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
+import com.example.moneytherapy.ui.viewModel.ThemeViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
