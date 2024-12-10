@@ -83,7 +83,10 @@ fun GoalDetailCard(
                             tint = themeColor
                         )
                     }
-                    IconButton(onClick = onDeleteClick) {
+                    IconButton(
+                        onClick = onDeleteClick,
+                        enabled = isCompleted
+                    ) {
                         Icon(
                             imageVector = Icons.Default.CheckCircle,
                             contentDescription = "Status do Objetivo",

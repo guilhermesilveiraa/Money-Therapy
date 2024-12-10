@@ -95,6 +95,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onDeleteGoal(goalId: Long) {
+
         viewModelScope.launch {
             deleteGoalUseCase(goalId)
             // Refresh all goals lists after deletion
