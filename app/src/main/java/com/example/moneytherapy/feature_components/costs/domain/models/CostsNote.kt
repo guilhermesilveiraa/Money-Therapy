@@ -13,7 +13,8 @@ data class CostsNote(
     var paymentWay: String,
     var installments: Int?, //If it's intallment the next month must contains the parcel from these cost
     var value: Double,
-    var costType: String
+    var costType: String,
+    var isFixed: Boolean
 ) : Parcelable {
 
 
@@ -28,6 +29,7 @@ data class CostsNote(
         installments?.let { parcel.writeInt(it) }
         parcel.writeDouble(value)
         parcel.writeString(costType)
+        parcel.writeBoolean(isFixed)
     }
 
     companion object CREATOR : Parcelable.Creator<CostsNote> {
@@ -38,7 +40,8 @@ data class CostsNote(
                 paymentWay = parcel.readString()?:"",
                 installments = parcel.readInt(),
                 value = parcel.readDouble(),
-                costType = parcel.readString()?:""
+                costType = parcel.readString()?:"",
+                isFixed = parcel.readBoolean()
             )
         }
 
