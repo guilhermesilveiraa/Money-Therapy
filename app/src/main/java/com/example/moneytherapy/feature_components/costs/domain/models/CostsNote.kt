@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDateTime
 
 @Entity(tableName = "CostsNote")
 data class CostsNote(
@@ -14,7 +15,8 @@ data class CostsNote(
     var installments: Int?, //If it's intallment the next month must contains the parcel from these cost
     var value: Double,
     var costType: String,
-    var isFixed: Boolean
+    var isFixed: Boolean,
+    val date: LocalDateTime = LocalDateTime.now()
 ) : Parcelable {
 
 
