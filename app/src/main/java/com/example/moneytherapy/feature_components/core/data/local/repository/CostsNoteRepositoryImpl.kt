@@ -6,7 +6,6 @@ import com.example.moneytherapy.feature_components.costs.domain.repository.Costs
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.cos
 
 @Singleton
 class CostsNoteRepositoryImpl @Inject constructor(
@@ -17,7 +16,7 @@ class CostsNoteRepositoryImpl @Inject constructor(
         costsNoteDao.save(costsNote)
     }
 
-    override suspend fun updateCostsNote(costsNote: CostsNoteRepository) {
+    override suspend fun updateCostsNote(costsNote: CostsNote) {
         costsNoteDao.update(costsNote)
     }
 

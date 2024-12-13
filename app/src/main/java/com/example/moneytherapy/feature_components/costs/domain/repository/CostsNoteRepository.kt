@@ -7,7 +7,7 @@ interface CostsNoteRepository  {
 
     suspend fun saveCostsNote(costsNote: CostsNote)
 
-    suspend fun updateCostsNote(costsNote: CostsNoteRepository)
+    suspend fun updateCostsNote(costsNote: CostsNote)
 
     suspend fun getAllMonthCosts() : Flow<List<CostsNote>>
 

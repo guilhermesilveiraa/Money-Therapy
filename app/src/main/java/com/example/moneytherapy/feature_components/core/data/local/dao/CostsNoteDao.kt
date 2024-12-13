@@ -1,5 +1,6 @@
 package com.example.moneytherapy.feature_components.core.data.local.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -8,16 +9,17 @@ import com.example.moneytherapy.feature_components.costs.domain.models.CostsNote
 import com.example.moneytherapy.feature_components.costs.domain.repository.CostsNoteRepository
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface CostsNoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(costsNote:CostsNote)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(costsNote: CostsNoteRepository)
+    suspend fun update(costsNote: CostsNote)
 
     @Query("SELECT * FROM CostsNote WHERE date BETWEEN :startOfMonth AND :endOfMonth")
-    suspend fun getAllCostsByMonth(startOfMonth: String, endOfMonth: String): Flow<List<CostsNote>>
+    fun getAllCostsByMonth(startOfMonth: String, endOfMonth: String): Flow<List<CostsNote>>
 
     //Queries por tipo de custo
     @Query("SELECT * FROM CostsNote WHERE costType = 'Pessoal' ")
@@ -38,10 +40,10 @@ interface CostsNoteDao {
     @Query("SELECT * FROM CostsNote WHERE costType = 'Outros'")
     fun getAllOtherCosts() : Flow<List<CostsNote>>
 
-    @Query("SELECT * FROM CostsNote WHERE isFixed = false ")
+    @Query("SELECT * FROM CostsNote WHERE isFixed = 0 ")
     fun getAllVariableCosts() : Flow<List<CostsNote>>
 
-    @Query("SELECT * FROM CostsNote WHERE isFixed = true")
+    @Query("SELECT * FROM CostsNote WHERE isFixed = 1")
     fun getAllFixedCosts() : Flow<List<CostsNote>>
 
     //Queries por tipo de pagamento
