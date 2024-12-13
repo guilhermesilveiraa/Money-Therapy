@@ -5,6 +5,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.moneytherapy.feature_components.costs.domain.models.CostsNote
+import com.example.moneytherapy.feature_components.costs.domain.repository.CostsNoteRepository
 import kotlinx.coroutines.flow.Flow
 
 interface CostsNoteDao {
@@ -13,7 +14,7 @@ interface CostsNoteDao {
     suspend fun save(costsNote:CostsNote)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(costsNote: CostsNote)
+    suspend fun update(costsNote: CostsNoteRepository)
 
     @Query("SELECT * FROM CostsNote WHERE date BETWEEN :startOfMonth AND :endOfMonth")
     suspend fun getAllCostsByMonth(startOfMonth: String, endOfMonth: String): Flow<List<CostsNote>>
