@@ -7,11 +7,15 @@ interface CostsNoteRepository  {
 
     suspend fun saveCostsNote(costsNote: CostsNote)
 
+    suspend fun updateCostsNote(costsNote: CostsNoteRepository)
+
+    suspend fun getAllMonthCosts() : Flow<List<CostsNote>>
+
     suspend fun getPersonalCosts() : Flow<List<CostsNote>>
 
     suspend fun getKnowledgeCosts() : Flow<List<CostsNote>>
 
-    suspend fun  getLivingCosts() : Flow<List<CostsNote>>
+    suspend fun getLivingCosts() : Flow<List<CostsNote>>
 
     suspend fun getUnexpectedCosts() : Flow<List<CostsNote>>
 
@@ -19,8 +23,6 @@ interface CostsNoteRepository  {
 
     suspend fun getOtherCosts() : Flow<List<CostsNote>>
 
-
-
-
+    suspend fun getFixedCosts() : Flow<List<CostsNote>>
 
 }
