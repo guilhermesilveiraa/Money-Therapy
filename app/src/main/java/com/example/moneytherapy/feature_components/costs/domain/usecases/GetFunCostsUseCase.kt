@@ -5,10 +5,10 @@ import com.example.moneytherapy.feature_components.costs.domain.repository.Costs
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAllKnowledgeCostsUseCase @Inject constructor(
+class GetFunCostsUseCase @Inject constructor(
     val repository: CostsNoteRepository
-) {
+){
     suspend operator fun invoke() : Flow<List<CostsNote>> {
-        return repository.getKnowledgeCosts()
+        return repository.getFunCosts()
     }
 }
