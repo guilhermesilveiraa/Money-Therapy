@@ -9,30 +9,28 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.moneytherapy.feature_components.costs.domain.models.CostsNote
+import com.example.moneytherapy.ui.componentsUI.NavBar
 import com.example.moneytherapy.ui.componentsUI.costs.CostCard
 import com.example.moneytherapy.ui.componentsUI.costs.CostsSummaryCard
 import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
 import com.example.moneytherapy.ui.viewModel.CostsExcelViewModel
 import java.time.LocalDateTime
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CostsScreen(
     modifier: Modifier = Modifier,
-    onNavigateToAddCost: () -> Unit,
+    onNavigateToInsertCost: () -> Unit,
+    navController: NavController,
     viewModel: CostsExcelViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
     var selectedCostType by remember { mutableStateOf("Todos") }
     var showFilterDialog by remember { mutableStateOf(false) }
-
     val monthCosts = uiState.monthCosts
 
     val costTypes = listOf(
@@ -57,9 +55,12 @@ fun CostsScreen(
                 }
             )
         },
+        bottomBar = {
+            NavBar(navController = navController)
+        },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onNavigateToAddCost,
+                onClick = onNavigateToInsertCost,
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
                 Icon(Icons.Default.Add, "Adicionar custo")
@@ -84,8 +85,10 @@ fun CostsScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(getSampleCosts()) { cost -> // Replace with actual data from ViewModel
-                    CostCard(cost = cost)
+                items(monthCosts) { cost ->
+                    CostCard(
+                        cost = cost,
+                    )
                 }
             }
         }
@@ -106,7 +109,10 @@ fun CostsScreen(
                             ) {
                                 RadioButton(
                                     selected = selectedCostType == type,
-                                    onClick = { selectedCostType = type }
+                                    onClick = {
+                                        selectedCostType = type
+                                        // Implementar filtro no ViewModel
+                                    }
                                 )
                                 Text(
                                     text = type,
@@ -122,7 +128,10 @@ fun CostsScreen(
                     }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showFilterDialog = false }) {
+                    TextButton(onClick = {
+                        selectedCostType = "Todos"
+                        showFilterDialog = false
+                    }) {
                         Text("Cancelar")
                     }
                 }
@@ -176,19 +185,6 @@ private fun getSampleCosts(): List<CostsNote> {
     )
 }
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    name = "Costs Screen Preview"
-)
-@Composable
-fun CostsScreenPreview() {
-    MoneyTherapyTheme {
-        CostsScreen(
-            onNavigateToAddCost = {}
-        )
-    }
-}
 
 @Preview(
     showBackground = true,

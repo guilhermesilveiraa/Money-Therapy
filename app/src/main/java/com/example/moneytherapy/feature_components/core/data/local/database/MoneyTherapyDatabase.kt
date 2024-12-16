@@ -11,7 +11,7 @@ import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 @Database(
     entities = [Goals::class, CostsNote::class],
     exportSchema = false,
-    version = 6
+    version = 7
 )
 
 @TypeConverters(DateConverters::class)

@@ -11,6 +11,7 @@ import com.example.moneytherapy.ui.screens.HomeScreen
 import com.example.moneytherapy.ui.screens.InsertGoalsScreen
 import com.example.moneytherapy.ui.screens.EditGoalScreen
 import com.example.moneytherapy.ui.screens.InsertCostNoteScreen
+import com.example.moneytherapy.ui.screens.CostsScreen
 
 
 /**
@@ -55,6 +56,15 @@ fun AppNavGraph(
                 },
                 onNavigateBack = {
                     navController.navigateUp()
+                },
+                navController = navController
+            )
+        }
+
+        composable("costs") {
+            CostsScreen(
+                onNavigateToInsertCost = {
+                    navController.navigate("insertCost")
                 },
                 navController = navController
             )
@@ -109,6 +119,8 @@ fun AppNavGraph(
 sealed class MoneyTherapyScreen(val route: String) {
     object Home : MoneyTherapyScreen("home")
     object InsertGoal : MoneyTherapyScreen("insertGoal")
+    object Costs : MoneyTherapyScreen("costs")  // Adicionado
+    object InsertCost : MoneyTherapyScreen("insertCost")  // Adicionado
 
     // Edit goal route with parameter
     data class EditGoal(val goalId: Long) : MoneyTherapyScreen("editGoal/$goalId") {
@@ -133,4 +145,15 @@ fun NavHostController.navigateToInsertGoal() {
 
 fun NavHostController.navigateToEditGoal(goalId: Long) {
     navigate(MoneyTherapyScreen.EditGoal(goalId).route)
+}
+
+fun NavHostController.navigateToCosts() {
+    navigate(MoneyTherapyScreen.Costs.route) {
+        popUpTo(MoneyTherapyScreen.Home.route)
+        launchSingleTop = true
+    }
+}
+
+fun NavHostController.navigateToInsertCost() {
+    navigate(MoneyTherapyScreen.InsertCost.route)
 }
