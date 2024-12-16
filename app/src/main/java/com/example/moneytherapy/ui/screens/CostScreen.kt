@@ -15,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.moneytherapy.feature_components.costs.domain.models.CostsNote
+import com.example.moneytherapy.ui.componentsUI.costs.CostCard
+import com.example.moneytherapy.ui.componentsUI.costs.CostsSummaryCard
 import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
 //import com.example.moneytherapy.ui.viewModel.CostsViewModel
 import java.time.LocalDateTime
@@ -127,109 +129,6 @@ fun CostsScreen(
     }
 }
 
-@Composable
-private fun CostsSummaryCard(
-    totalMonth: Double,
-    fixedCosts: Double,
-    variableCosts: Double
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = "Resumo do Mês",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Text("Total: R$ ${String.format("%.2f", totalMonth)}")
-                    Text("Fixos: R$ ${String.format("%.2f", fixedCosts)}")
-                    Text("Variáveis: R$ ${String.format("%.2f", variableCosts)}")
-                }
-                CircularProgressIndicator(
-                    progress = (fixedCosts / totalMonth).toFloat(),
-                    modifier = Modifier.size(48.dp)
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun CostCard(cost: CostsNote) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Text(
-                        text = cost.title ?: "Sem título",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = cost.costType,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                }
-                Text(
-                    text = "R$ ${String.format("%.2f", cost.value)}",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.Default.Payment,
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Text(
-                        text = cost.paymentWay,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(start = 4.dp)
-                    )
-                }
-
-                if (cost.installments != null) {
-                    Text(
-                        text = "${cost.installments}x",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-            }
-        }
-    }
-}
-
-// Sample data function
 private fun getSampleCosts(): List<CostsNote> {
     return listOf(
         CostsNote(
@@ -255,7 +154,7 @@ private fun getSampleCosts(): List<CostsNote> {
         CostsNote(
             id = 3,
             title = "Academia",
-            paymentWay = "Débito Automático",
+            paymentWay = "Débito",
             installments = null,
             value = 89.90,
             costType = "Pessoal",
