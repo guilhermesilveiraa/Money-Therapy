@@ -18,20 +18,22 @@ import com.example.moneytherapy.feature_components.costs.domain.models.CostsNote
 import com.example.moneytherapy.ui.componentsUI.costs.CostCard
 import com.example.moneytherapy.ui.componentsUI.costs.CostsSummaryCard
 import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
-//import com.example.moneytherapy.ui.viewModel.CostsViewModel
+import com.example.moneytherapy.ui.viewModel.CostsExcelViewModel
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CostsScreen(
     modifier: Modifier = Modifier,
     onNavigateToAddCost: () -> Unit,
-    //viewModel: CostsViewModel = hiltViewModel()
+    viewModel: CostsExcelViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     var selectedCostType by remember { mutableStateOf("Todos") }
     var showFilterDialog by remember { mutableStateOf(false) }
+
+    val monthCosts = uiState.monthCosts
 
     val costTypes = listOf(
         "Todos",

@@ -23,11 +23,18 @@ fun CostsSummaryCard(
     variableCosts: Double,
     modifier: Modifier = Modifier
 ) {
+
+
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -43,14 +50,11 @@ fun CostsSummaryCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    Text("Total: R$ ${String.format("%.2f", totalMonth)}")
                     Text("Fixos: R$ ${String.format("%.2f", fixedCosts)}")
                     Text("Variáveis: R$ ${String.format("%.2f", variableCosts)}")
                 }
-                CircularProgressIndicator(
-                    progress = (fixedCosts / totalMonth).toFloat(),
-                    modifier = Modifier.size(48.dp)
-                )
+                Text("Total: R$ ${String.format("%.2f", totalMonth)}")
+
             }
         }
     }
@@ -129,6 +133,14 @@ fun CostCard(
                 if (cost.isFixed) {
                     Text(
                         text = "Custo Fixo",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(top = 2.dp)
+                    )
+                }
+                else {
+                    Text(
+                        text = "Custo Variável",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 2.dp)
