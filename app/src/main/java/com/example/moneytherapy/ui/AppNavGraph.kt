@@ -10,6 +10,8 @@ import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.ui.screens.HomeScreen
 import com.example.moneytherapy.ui.screens.InsertGoalsScreen
 import com.example.moneytherapy.ui.screens.EditGoalScreen
+import com.example.moneytherapy.ui.screens.InsertCostNoteScreen
+
 
 /**
  * Main navigation graph for the Money Therapy application.
@@ -30,7 +32,6 @@ fun AppNavGraph(
         startDestination = startDestination
     ) {
         // Home Screen Route
-        // Displays the main dashboard with all goals
         composable("home") {
             HomeScreen(
                 onNavigateToInsertGoal = {
@@ -38,30 +39,44 @@ fun AppNavGraph(
                 },
                 onNavigateToEditGoal = { goalId ->
                     navController.navigate("editGoal/$goalId")
-                }
+                },
+                navController = navController
             )
         }
 
         // Insert Goal Screen Route
-        // Handles creation of new goals
         composable("insertGoal") {
             InsertGoalsScreen(
                 onSaveGoal = { goal ->
                     onSaveGoal(goal)
                     navController.navigate("home") {
-                        // Clear the back stack up to home
                         popUpTo("home") { inclusive = true }
                     }
                 },
                 onNavigateBack = {
                     navController.navigateUp()
-                }
+                },
+                navController = navController
+            )
+        }
+
+        composable("insertCost") {
+            InsertCostNoteScreen(
+                onSaveCostNote = { costNote ->
+                    // Implement cost saving logic
+                    navController.navigate("costs") {
+                        popUpTo("costs") { inclusive = true }
+                    }
+                },
+                onNavigateBack = {
+                    navController.navigateUp()
+                    true
+                },
+                navController = navController
             )
         }
 
         // Edit Goal Screen Route
-        // Handles editing of existing goals
-        // Requires a goalId parameter to identify which goal to edit
         composable(
             route = "editGoal/{goalId}",
             arguments = listOf(
@@ -71,18 +86,17 @@ fun AppNavGraph(
                 }
             )
         ) { entry ->
-            // Extract the goalId from navigation arguments
             val goalId = entry.arguments?.getLong("goalId")
-                ?: return@composable // Return if goalId is null (shouldn't happen)
+                ?: return@composable
 
             EditGoalScreen(
                 goalId = goalId,
                 onNavigateBack = {
                     navController.navigate("home") {
-                        // Clear the back stack up to home
                         popUpTo("home") { inclusive = true }
                     }
-                }
+                },
+                navController = navController
             )
         }
     }

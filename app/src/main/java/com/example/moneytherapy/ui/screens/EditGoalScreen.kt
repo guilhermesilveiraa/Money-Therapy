@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.ui.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
@@ -24,7 +25,8 @@ fun EditGoalScreen(
     goalId: Long,
     viewModel: HomeViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     // Create coroutine scope for launching coroutines from composables
     val scope = rememberCoroutineScope()

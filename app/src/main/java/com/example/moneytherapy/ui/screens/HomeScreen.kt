@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.moneytherapy.ui.componentsUI.*
 import com.example.moneytherapy.ui.viewModel.*
 
@@ -24,7 +25,8 @@ fun HomeScreen(
     onNavigateToInsertGoal: () -> Unit,
     onNavigateToEditGoal: (Long) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
-    themeViewModel: ThemeViewModel = hiltViewModel()
+    themeViewModel: ThemeViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val themeMode by themeViewModel.themeMode.collectAsState()
@@ -39,7 +41,7 @@ fun HomeScreen(
         topBar = {
             HomeTopAppBar()
         },
-        bottomBar = { NavBar() },
+        bottomBar = { NavBar(navController = navController)},
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onNavigateToInsertGoal,

@@ -32,6 +32,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.navigation.NavController
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +40,8 @@ import androidx.compose.ui.text.input.KeyboardType
 fun InsertGoalsScreen(
     modifier: Modifier = Modifier,
     onSaveGoal: (Goals) -> Unit,
-    onNavigateBack: () -> Boolean
+    onNavigateBack: () -> Boolean,
+    navController : NavController
 ) {
     var goalId by remember { mutableLongStateOf(0L) }
     var goalTitle by remember { mutableStateOf("") }
@@ -50,7 +52,7 @@ fun InsertGoalsScreen(
 
     Scaffold(
         topBar = { HomeTopAppBar() },
-        bottomBar = { NavBar() },
+        bottomBar = { NavBar(navController = navController) },
         modifier = modifier.fillMaxSize()
     ) { paddingValues ->
         Column(
