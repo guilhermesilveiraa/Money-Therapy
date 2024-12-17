@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.moneytherapy.feature_components.costs.domain.models.CostsNote
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.ui.screens.HomeScreen
 import com.example.moneytherapy.ui.screens.InsertGoalsScreen
@@ -21,12 +22,14 @@ import com.example.moneytherapy.ui.screens.CostsScreen
  * @param navController The navigation controller managing app navigation
  * @param startDestination The initial route to display (defaults to "home")
  * @param onSaveGoal Callback function for saving new goals
+ * @param onSaveCostNote Callback function for saving new CostNote
  */
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
     startDestination: String = "home",
-    onSaveGoal: (Goals) -> Unit
+    onSaveGoal: (Goals) -> Unit,
+    onSaveCostNote: (CostsNote) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -73,7 +76,7 @@ fun AppNavGraph(
         composable("insertCost") {
             InsertCostNoteScreen(
                 onSaveCostNote = { costNote ->
-                    // Implement cost saving logic
+                    onSaveCostNote(costNote)
                     navController.navigate("costs") {
                         popUpTo("costs") { inclusive = true }
                     }

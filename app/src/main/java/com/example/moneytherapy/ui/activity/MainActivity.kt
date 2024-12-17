@@ -7,6 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
+import com.example.moneytherapy.feature_components.costs.domain.models.CostsNote
 import com.example.moneytherapy.feature_components.goals.domain.models.Goals
 import com.example.moneytherapy.ui.AppNavGraph
 import com.example.moneytherapy.ui.theme.MoneyTherapyTheme
@@ -39,6 +40,9 @@ class MainActivity : ThemeActivity() {
                     startDestination = "home",
                     onSaveGoal = { goal: Goals ->
                         viewModel.onBottomItemCreateGoal(goal)
+                    },
+                    onSaveCostNote = { cost: CostsNote ->  // Adicionar este parâmetro
+                        costsViewModel.onSaveCostNote(cost)
                     }
                 )
             }

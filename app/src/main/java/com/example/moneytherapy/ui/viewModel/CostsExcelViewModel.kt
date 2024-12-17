@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.moneytherapy.feature_components.costs.domain.models.CostsNote
+import com.example.moneytherapy.feature_components.costs.domain.usecases.CreateCostNoteUseCase
 import com.example.moneytherapy.feature_components.costs.domain.usecases.GetAllMonthCostNoteUseCase
 import com.example.moneytherapy.ui.states.CostNoteUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CostsExcelViewModel @Inject constructor(
+    private val createCostNoteUseCase: CreateCostNoteUseCase,
     private val getAllMonthCostNoteUseCase : GetAllMonthCostNoteUseCase,
 ) : ViewModel(){
 
@@ -24,6 +27,20 @@ class CostsExcelViewModel @Inject constructor(
 
     init {
         fetchAllMonthCosts()
+    }
+
+
+    fun onSaveCostNote(costNote: CostsNote) {
+        viewModelScope.launch {
+            try {
+                Log.d("ViewModel", "Trying to save cost note: $costNote")
+                createCostNoteUseCase(costNote)
+                Log.d("ViewModel", "Cost note saved successfully")
+                fetchAllMonthCosts() // Recarregar a lista após salvar
+            } catch (e: Exception) {
+                Log.e("ViewModel", "Error saving cost note", e)
+            }
+        }
     }
 
 

@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.moneytherapy.feature_components.theme.domain.models.ThemeMode
+import com.example.moneytherapy.ui.viewModel.CostsExcelViewModel
 import com.example.moneytherapy.ui.viewModel.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -13,6 +15,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 abstract class ThemeActivity : ComponentActivity() {
+    val costsViewModel: CostsExcelViewModel by viewModels()
     private val themeViewModel: ThemeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
