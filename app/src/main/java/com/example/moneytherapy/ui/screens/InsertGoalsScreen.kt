@@ -40,8 +40,8 @@ import androidx.navigation.NavController
 fun InsertGoalsScreen(
     modifier: Modifier = Modifier,
     onSaveGoal: (Goals) -> Unit,
-    onNavigateBack: () -> Boolean,
-    navController : NavController
+    navController: NavController,
+    onNavigateBack: () -> Boolean
 ) {
     var goalId by remember { mutableLongStateOf(0L) }
     var goalTitle by remember { mutableStateOf("") }

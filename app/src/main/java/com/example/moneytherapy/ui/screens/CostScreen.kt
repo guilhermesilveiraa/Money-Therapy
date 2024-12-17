@@ -74,9 +74,9 @@ fun CostsScreen(
         ) {
             // Summary Card
             CostsSummaryCard(
-                totalMonth = 2500.0, // Replace with actual data from ViewModel
-                fixedCosts = 1500.0,
-                variableCosts = 1000.0
+                totalMonth = monthCosts.sumOf { it.value },
+                fixedCosts = monthCosts.filter { it.isFixed }.sumOf { it.value },
+                variableCosts = monthCosts.filter { !it.isFixed }.sumOf { it.value }
             )
 
             // Costs List
