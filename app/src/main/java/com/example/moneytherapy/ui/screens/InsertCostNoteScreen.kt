@@ -57,6 +57,9 @@ fun InsertCostNoteScreen(
     var costNoteCostType by remember { mutableStateOf("") }
     var costNoteIsFixed by remember { mutableStateOf(false) }
     var costNoteDate by remember { mutableStateOf(LocalDateTime.now()) }
+    var expandedCostType by remember { mutableStateOf(false) }
+    var expandedPayment by remember { mutableStateOf(false) }
+
 
     Scaffold(
         topBar = { HomeTopAppBar() },
@@ -103,8 +106,8 @@ fun InsertCostNoteScreen(
                     )
 
                     ExposedDropdownMenuBox(
-                        expanded = false,
-                        onExpandedChange = { },
+                        expanded = expandedPayment,
+                        onExpandedChange = { expandedPayment = it },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         OutlinedTextField(
@@ -112,7 +115,7 @@ fun InsertCostNoteScreen(
                             onValueChange = {},
                             readOnly = true,
                             label = { Text("Forma de Pagamento") },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = false) },
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedPayment) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .menuAnchor(),
@@ -120,13 +123,16 @@ fun InsertCostNoteScreen(
                         )
 
                         ExposedDropdownMenu(
-                            expanded = false,
-                            onDismissRequest = { }
+                            expanded = expandedPayment,
+                            onDismissRequest = { expandedPayment = false }
                         ) {
                             listOf("Dinheiro", "Cartão de Crédito", "Cartão de Débito", "PIX").forEach { option ->
                                 DropdownMenuItem(
                                     text = { Text(option) },
-                                    onClick = { costNotePaymentWay = option }
+                                    onClick = {
+                                        costNotePaymentWay = option
+                                        expandedPayment = false
+                                    }
                                 )
                             }
                         }
@@ -164,8 +170,8 @@ fun InsertCostNoteScreen(
                     )
 
                     ExposedDropdownMenuBox(
-                        expanded = false,
-                        onExpandedChange = { },
+                        expanded = expandedCostType,
+                        onExpandedChange = { expandedCostType = it },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         OutlinedTextField(
@@ -173,7 +179,7 @@ fun InsertCostNoteScreen(
                             onValueChange = {},
                             readOnly = true,
                             label = { Text("Tipo de Gasto") },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = false) },
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedCostType) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .menuAnchor(),
@@ -181,13 +187,23 @@ fun InsertCostNoteScreen(
                         )
 
                         ExposedDropdownMenu(
-                            expanded = false,
-                            onDismissRequest = { }
+                            expanded = expandedCostType,
+                            onDismissRequest = { expandedCostType = false }
                         ) {
-                            listOf("Pessoal", "Conhecimento", "Moradia", "Inesperado", "Lazer", "Outros").forEach { option ->
+                            listOf(
+                                "Pessoal",
+                                "Conhecimento",
+                                "Moradia",
+                                "Inesperado",
+                                "Lazer",
+                                "Outros"
+                            ).forEach { option ->
                                 DropdownMenuItem(
                                     text = { Text(option) },
-                                    onClick = { costNoteCostType = option }
+                                    onClick = {
+                                        costNoteCostType = option
+                                        expandedCostType = false
+                                    }
                                 )
                             }
                         }

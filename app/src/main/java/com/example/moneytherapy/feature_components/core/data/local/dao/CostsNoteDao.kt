@@ -18,7 +18,7 @@ interface CostsNoteDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(costsNote: CostsNote)
 
-    @Query("SELECT * FROM CostsNote WHERE date BETWEEN :startOfMonth AND :endOfMonth")
+    @Query("SELECT * FROM CostsNote WHERE date BETWEEN :startOfMonth AND :endOfMonth ORDER BY date DESC")
     fun getAllCostsByMonth(startOfMonth: String, endOfMonth: String): Flow<List<CostsNote>>
 
     //Queries por tipo de custo
