@@ -4,6 +4,7 @@ import com.example.moneytherapy.feature_components.core.data.local.dao.CostsNote
 import com.example.moneytherapy.feature_components.costs.domain.models.CostsNote
 import com.example.moneytherapy.feature_components.costs.domain.repository.CostsNoteRepository
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,9 +22,22 @@ class CostsNoteRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAllMonthCosts(): Flow<List<CostsNote>> {
+        val now = LocalDateTime.now()
+        val startOfMonth = now.withDayOfMonth(1)
+            .withHour(0)
+            .withMinute(0)
+            .withSecond(0)
+            .withNano(0)
+
+        val endOfMonth = now.withDayOfMonth(now.month.length(now.toLocalDate().isLeapYear))
+            .withHour(23)
+            .withMinute(59)
+            .withSecond(59)
+            .withNano(999999999)
+
         return costsNoteDao.getAllCostsByMonth(
-            startOfMonth = TODO(),
-            endOfMonth = TODO()
+            startOfMonth = startOfMonth.toString(),
+            endOfMonth = endOfMonth.toString()
         )
     }
 
